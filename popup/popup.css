@@ -41,6 +41,7 @@
 
 body {
   width: 360px;
+  overflow-x: hidden; /* never scroll sideways */
   margin: 0;
   padding: 16px;
   background: var(--bg);
@@ -170,19 +171,21 @@ input[type="text"]:focus {
 
 .row {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* buttons stay at the top for long topics */
   gap: 6px;
   padding: 6px 6px 6px 12px;
   border-radius: 8px;
   background: var(--surface);
 }
 
+/* Long topics wrap onto more lines instead of making the popup scroll
+   sideways. The small top padding lines the text up with the buttons. */
 .text {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis; /* long topics end in "…" */
-  white-space: nowrap;
+  padding-top: 5px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
 }
 
 .actions {

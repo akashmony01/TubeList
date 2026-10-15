@@ -19,7 +19,9 @@
 .panel {
   height: 100%;
   overflow-y: auto;
-  padding: 48px 24px;
+  /* Extra space on top so the heading and button never sit under
+     YouTube's top bar. */
+  padding: 72px 24px 48px;
   background: var(--tl-bg);
   color: var(--tl-text);
   font-family: "Roboto", "Arial", sans-serif;
@@ -162,7 +164,7 @@
 .topic {
   display: flex;
   flex: 1;
-  align-items: center;
+  align-items: flex-start; /* icon stays by the first line of long topics */
   gap: 12px;
   min-width: 0;
   padding: 14px 16px;
@@ -173,13 +175,17 @@
 }
 
 .topic-text {
+  line-height: 24px;
   overflow-wrap: anywhere; /* long words wrap instead of overflowing */
 }
 
+/* The icon is 20px tall and each text line is 24px, so 2px of space on top
+   centres the icon on the first line (whether there is 1 line or many). */
 .topic-icon {
   flex: none;
   width: 20px;
   height: 20px;
+  margin-top: 2px;
   color: var(--tl-text-2);
 }
 

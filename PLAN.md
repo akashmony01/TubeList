@@ -40,34 +40,35 @@ topic → YouTube searches for it → you start watching.
 
 ### Stage 1 — Panel on the home page (sample list)
 - [x] Full-page panel appears on youtube.com home, feed hidden underneath
-- [~] Panel also appears when clicking the YouTube logo / going back to Home (no reload)
-- [~] Panel disappears on other pages (videos, search, channels)
-- [~] Clicking a topic opens YouTube search for it
-- [~] "Go to normal YouTube" button dismisses the panel
-- [~] Matches YouTube light & dark mode
-- [~] Panel is inside a Shadow DOM
+- [x] Panel also appears when clicking the YouTube logo / going back to Home (no reload)
+- [x] Panel disappears on other pages (videos, search, channels)
+- [x] Clicking a topic opens YouTube search for it
+- [x] "Go to normal YouTube" button dismisses the panel
+- [x] Matches YouTube light & dark mode
+- [x] Panel is inside a Shadow DOM
 
 ### Stage 2 — Saved topic list + popup
-- [~] Topics saved in extension storage (replace the sample list)
-- [~] Toolbar popup: add, edit, delete topics
-- [~] Panel updates live when the list changes
-- [~] Duplicate topics blocked with a note; new topics go to the top
+- [x] Topics saved in extension storage (replace the sample list)
+- [x] Toolbar popup: add, edit, delete topics
+- [x] Panel updates live when the list changes
+- [x] Duplicate topics blocked with a note; new topics go to the top
 
 ### Stage 3 — Manage topics in the panel
-- [~] Type a topic in the panel and press Enter to add it
-- [~] Edit and delete buttons on each topic (appear on hover)
-- [~] Typing in the panel doesn't trigger YouTube's own keyboard shortcuts
+- [x] Type a topic in the panel and press Enter to add it
+- [x] Edit and delete buttons on each topic (appear on hover)
+- [x] Typing in the panel doesn't trigger YouTube's own keyboard shortcuts
 
 ### Stage 4 — Keyboard shortcut
-- [~] Alt+Shift+Y opens a new YouTube tab with the panel and the add box focused
+- [x] Alt+Shift+Y opens a new YouTube tab with the panel and the add box focused (works while the browser window is in front — browser rule)
+- [x] README: optional system-wide shortcut (Linux GNOME/KDE, Windows, macOS) opening the link in the default browser
 - [x] Instructions to change the shortcut in each browser
 
 ### Stage 5 — Distraction-hiding toggles (popup switches, all ON by default)
-- [~] Hide Shorts everywhere
-- [~] Hide recommended videos in the sidebar while watching
-- [~] Hide end-of-video suggestion cards
-- [~] Hide the home feed (the panel replaces it)
-- [~] Check TubeList and Unhook work together (reviewed in code; needs your real-browser check)
+- [x] Hide Shorts everywhere
+- [x] Hide recommended videos in the sidebar while watching
+- [x] Hide end-of-video suggestion cards
+- [x] Hide the home feed (the panel replaces it)
+- [x] Check TubeList and Unhook work together
 
 ### Finish
 - [x] Simple icon
@@ -75,6 +76,12 @@ topic → YouTube searches for it → you start watching.
 - [x] LICENSE (MIT, akashmony01)
 - [x] .gitignore
 - [x] git repository with a clean first commit
+
+### Release v1.0.0
+- [x] README: supported / not supported, install from GitHub release, updating, removing, privacy, troubleshooting
+- [x] Release zip `TubeList-v1.0.0.zip` (extension files only)
+- [x] Pushed to github.com/akashmony01/TubeList with tag v1.0.0
+- [ ] GitHub release page created with the zip attached
 
 ## Not in version 1
 "Done" checkboxes (planned v1.1), sync across devices, categories/tags,
@@ -95,6 +102,14 @@ AI suggestions, timers/stats, store publishing, Safari, OS-wide shortcut.
 ### Maybe later
 - [ ] Permanent Firefox install (signing the add-on through Mozilla as a
       private, unlisted add-on, without publishing it in the store).
+- [ ] **Use the list on mobile.** The YouTube *app* can't be changed by any
+      extension. Most realistic path: Firefox for Android (supports add-ons)
+      + support for m.youtube.com + list sync via Firefox Sync
+      (storage.sync). Needs the add-on signed by Mozilla. See the
+      2026-10-15 notes for the options and their complexity.
 
 ## Notes / issues found during testing
-_(We'll add anything that comes up here.)_
+- 2026-10-15: First full test in Firefox: everything works except the Alt+Shift+Y shortcut (no tab opens). Checking the cause next.
+- 2026-10-15: Chrome shows a harmless warning about `background.scripts` (needed for Firefox). Kept to stay one codebase; explained in README.
+- 2026-10-15: Version 1 fully tested by the user in Firefox and Chrome. Ready for release.
+- 2026-10-15: Cause found: the shortcut works, but only while Firefox is the active window. Extensions can't do system-wide shortcuts, so the README now explains how to set one up in the operating system instead.

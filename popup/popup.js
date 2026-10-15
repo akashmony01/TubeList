@@ -22,8 +22,8 @@
     listEl: document.getElementById('topic-list'),
     emptyEl: document.getElementById('empty'),
     showMessage,
-    // In the popup, a topic is just its text (long ones end in "…").
-    renderLabel: (topic) => el('span', { class: 'text', title: topic.text }, [topic.text]),
+    // In the popup, a topic is just its text (long ones wrap onto more lines).
+    renderLabel: (topic) => el('span', { class: 'text' }, [topic.text]),
   });
 
   TubeListTopics.load().then(topicList.setTopics);
