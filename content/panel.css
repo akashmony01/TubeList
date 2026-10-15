@@ -1,0 +1,227 @@
+/*
+ * TubeList — panel styles
+ * ============================================================================
+ * These styles live inside the panel's Shadow DOM (a sealed box), so they
+ * only affect the panel and never YouTube. The colours (--tl-...) are set in
+ * youtube-selectors.css and switch automatically with YouTube's dark mode.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* The whole panel: fills the space below YouTube's top bar and scrolls
+   on its own if the list gets long. */
+.panel {
+  height: 100%;
+  overflow-y: auto;
+  padding: 48px 24px;
+  background: var(--tl-bg);
+  color: var(--tl-text);
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 14px;
+}
+
+/* Keeps the content in a readable column in the middle of the screen. */
+.inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ---- Header: title + "Go to normal YouTube" ---- */
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 16px;
+  color: var(--tl-text-2);
+}
+
+/* ---- Buttons ---- */
+
+.btn {
+  height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--tl-border);
+  border-radius: 18px;
+  background: transparent;
+  color: var(--tl-text);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--tl-surface);
+}
+
+.btn-primary {
+  border-color: var(--tl-accent);
+  background: var(--tl-accent);
+  color: var(--tl-accent-text);
+}
+
+.btn-primary:hover {
+  background: var(--tl-accent);
+  opacity: 0.9;
+}
+
+.btn-small {
+  height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.btn-danger {
+  color: var(--tl-danger);
+}
+
+/* ---- The add box ---- */
+
+.add,
+.edit-row {
+  display: flex;
+  gap: 8px;
+}
+
+.add-input,
+.edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0 16px;
+  border: 1px solid var(--tl-border);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--tl-text);
+  font: inherit;
+}
+
+.add-input {
+  height: 44px;
+  font-size: 16px;
+}
+
+.add .btn {
+  height: 44px;
+  border-radius: 22px;
+}
+
+.add-input:focus,
+.edit-input:focus {
+  outline: 2px solid var(--tl-accent);
+  outline-offset: -1px;
+}
+
+/* Short notes like "Already in your list." */
+.message {
+  min-height: 20px;
+  margin: 8px 0;
+  color: var(--tl-danger);
+}
+
+/* ---- The topic list ---- */
+
+.topics {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  background: var(--tl-surface);
+}
+
+.row:hover {
+  background: var(--tl-surface-hover);
+}
+
+/* The topic itself: the whole row is clickable. */
+.topic {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  color: inherit;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.topic-text {
+  overflow-wrap: anywhere; /* long words wrap instead of overflowing */
+}
+
+.topic-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--tl-text-2);
+}
+
+/* Edit / Delete: only visible when the mouse is over the row
+   (or when you reach them with the Tab key). */
+.actions {
+  display: flex;
+  flex: none;
+  gap: 6px;
+  padding-right: 10px;
+  opacity: 0;
+}
+
+.row:hover .actions,
+.row:focus-within .actions {
+  opacity: 1;
+}
+
+/* A topic being edited. */
+.edit-row {
+  align-items: center;
+  padding: 8px 10px;
+}
+
+.edit-input {
+  height: 36px;
+  font-size: 16px;
+}
+
+/* Shown instead of the list when you have no topics. */
+.empty {
+  padding: 32px 16px;
+  border: 1px dashed var(--tl-border);
+  border-radius: 12px;
+  color: var(--tl-text-2);
+  font-size: 16px;
+  text-align: center;
+}
+
+/* A clear outline when moving around with the Tab key. */
+.topic:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--tl-accent);
+  outline-offset: 2px;
+}

@@ -1,0 +1,165 @@
+/*
+ * TubeList — YouTube selectors
+ * ============================================================================
+ * EVERYTHING in this file depends on how YouTube builds its pages (the names
+ * of its elements). YouTube changes these from time to time. If something
+ * stops being hidden, or the panel sits in the wrong place, this is the file
+ * to fix. The README ("Fixing things when YouTube changes") explains how to
+ * find a new selector.
+ *
+ * TubeList adds these classes to the page's <html> element:
+ *   .tubelist-panel-open       the TubeList panel is showing (you're on Home)
+ *   .tubelist-hide-shorts      switch "Hide Shorts everywhere" is ON
+ *   .tubelist-hide-sidebar     switch "Hide recommended videos in the sidebar" is ON
+ *   .tubelist-hide-endcards    switch "Hide end-of-video suggestion cards" is ON
+ *   .tubelist-hide-home-feed   switch "Hide the home feed" is ON
+ * Each rule below starts with one of these classes, so it only applies while
+ * that switch is ON.
+ *
+ * The only other YouTube-specific bits (the "page changed" event name and
+ * how we recognise the home page) are at the top of content/content.js.
+ *
+ * This CSS was written for TubeList from scratch (not copied from other
+ * extensions).
+ */
+
+
+/* ===========================================================================
+ * 1. The panel: where it sits and its colours
+ * ======================================================================== */
+
+/* The panel's container is hidden unless the panel is open. */
+#tubelist-host {
+  display: none;
+}
+
+html.tubelist-panel-open #tubelist-host {
+  display: block;
+  position: fixed;
+  /* Start just below YouTube's top bar (logo + search box), so the search
+     box stays usable. YouTube keeps that bar's height in this variable;
+     56px is used if the variable ever disappears. */
+  top: var(--ytd-masthead-height, 56px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Above the page, but below YouTube's pop-up menus (search suggestions,
+     account menu), which use higher numbers. */
+  z-index: 1000;
+  background: var(--tl-bg);
+}
+
+/* Light mode (YouTube's own light colours). */
+#tubelist-host {
+  --tl-bg: #ffffff;
+  --tl-text: #0f0f0f;
+  --tl-text-2: #606060;
+  --tl-surface: rgba(0, 0, 0, 0.05);
+  --tl-surface-hover: rgba(0, 0, 0, 0.1);
+  --tl-border: rgba(0, 0, 0, 0.15);
+  --tl-accent: #065fd4;
+  --tl-accent-text: #ffffff;
+  --tl-danger: #cc0000;
+}
+
+/* Dark mode: YouTube puts a "dark" attribute on <html> when it's on. */
+html[dark] #tubelist-host {
+  --tl-bg: #0f0f0f;
+  --tl-text: #f1f1f1;
+  --tl-text-2: #aaaaaa;
+  --tl-surface: rgba(255, 255, 255, 0.1);
+  --tl-surface-hover: rgba(255, 255, 255, 0.2);
+  --tl-border: rgba(255, 255, 255, 0.2);
+  --tl-accent: #3ea6ff;
+  --tl-accent-text: #0f0f0f;
+  --tl-danger: #ff6b6b;
+}
+
+/* While the panel is open, hide the home page's videos behind it.
+   ytd-browse[page-subtype="home"] is the whole home page area.
+   We use "visibility: hidden" rather than removing it, so YouTube doesn't
+   keep loading more and more videos behind the panel. */
+html.tubelist-panel-open ytd-browse[page-subtype="home"] {
+  visibility: hidden !important;
+}
+
+/* Stop the hidden page behind the panel from scrolling. */
+html.tubelist-panel-open,
+html.tubelist-panel-open body {
+  overflow: hidden !important;
+}
+
+
+/* ===========================================================================
+ * 2. Switch: "Hide the home feed"
+ *    Keeps the home page empty even after "Go to normal YouTube".
+ * ======================================================================== */
+
+/* ytd-rich-grid-renderer is the grid of recommended videos on Home
+   (including the row of topic "chips" above it). */
+html.tubelist-hide-home-feed ytd-browse[page-subtype="home"] ytd-rich-grid-renderer {
+  display: none !important;
+}
+
+
+/* ===========================================================================
+ * 3. Switch: "Hide Shorts everywhere"
+ * ======================================================================== */
+
+/* Rows/shelves of Shorts (Home, Subscriptions, Search, next to videos). */
+html.tubelist-hide-shorts ytd-reel-shelf-renderer,
+html.tubelist-hide-shorts ytd-rich-shelf-renderer[is-shorts],
+html.tubelist-hide-shorts ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts]),
+html.tubelist-hide-shorts grid-shelf-view-model:has(ytm-shorts-lockup-view-model),
+
+/* Single Shorts mixed in with normal videos. Shorts links always start
+   with "/shorts/", so we hide any video tile that links there. */
+html.tubelist-hide-shorts ytm-shorts-lockup-view-model,
+html.tubelist-hide-shorts ytm-shorts-lockup-view-model-v2,
+html.tubelist-hide-shorts ytd-rich-item-renderer:has(ytm-shorts-lockup-view-model),
+html.tubelist-hide-shorts ytd-rich-item-renderer:has(a[href^="/shorts/"]),
+html.tubelist-hide-shorts ytd-video-renderer:has(a[href^="/shorts/"]),
+html.tubelist-hide-shorts ytd-grid-video-renderer:has(a[href^="/shorts/"]),
+html.tubelist-hide-shorts ytd-compact-video-renderer:has(a[href^="/shorts/"]),
+html.tubelist-hide-shorts yt-lockup-view-model:has(a[href^="/shorts/"]),
+
+/* The "Shorts" button in the left menu (full menu and the narrow one). */
+html.tubelist-hide-shorts ytd-guide-entry-renderer:has(a[href^="/shorts"]),
+html.tubelist-hide-shorts ytd-guide-entry-renderer:has(a[title="Shorts"]),
+html.tubelist-hide-shorts ytd-mini-guide-entry-renderer:has(a[href^="/shorts"]),
+html.tubelist-hide-shorts ytd-mini-guide-entry-renderer[aria-label="Shorts"],
+
+/* The "Shorts" tab on channel pages (matches the English label). */
+html.tubelist-hide-shorts yt-tab-shape[tab-title="Shorts"] {
+  display: none !important;
+}
+
+
+/* ===========================================================================
+ * 4. Switch: "Hide recommended videos in the sidebar while watching"
+ *    Only the recommendations are hidden. Playlists and live chat, which
+ *    also sit in that column, stay visible.
+ * ======================================================================== */
+
+/* #related is the list of recommended videos on a video page (on the
+   right, or below the video in narrow windows). */
+html.tubelist-hide-sidebar ytd-watch-flexy #related,
+html.tubelist-hide-sidebar ytd-watch-flexy ytd-watch-next-secondary-results-renderer {
+  display: none !important;
+}
+
+
+/* ===========================================================================
+ * 5. Switch: "Hide end-of-video suggestion cards"
+ *    These all live inside YouTube's video player (.html5-video-player).
+ * ======================================================================== */
+
+/* Video/channel cards that pop up over the last seconds of a video. */
+html.tubelist-hide-endcards .html5-video-player .ytp-ce-element,
+/* The grid of suggested videos shown after a video ends. */
+html.tubelist-hide-endcards .html5-video-player .html5-endscreen,
+html.tubelist-hide-endcards .html5-video-player .ytp-endscreen-content,
+/* The "more videos" grid you can pull up in full screen. */
+html.tubelist-hide-endcards .html5-video-player .ytp-fullscreen-grid {
+  display: none !important;
+}

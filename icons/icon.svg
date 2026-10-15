@@ -1,0 +1,17 @@
+<!--
+  TubeList icon (source drawing).
+  A rounded square with a short list: each line starts with a small "play"
+  triangle — a list of things to watch.
+  The PNG files next to this one are what the browser actually uses.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="#0e8f7e"/>
+  <g fill="#ffffff">
+    <path d="M28 30 L46 40 L28 50 Z"/>
+    <rect x="54" y="34" width="48" height="12" rx="6"/>
+    <path d="M28 54 L46 64 L28 74 Z"/>
+    <rect x="54" y="58" width="48" height="12" rx="6"/>
+    <path d="M28 78 L46 88 L28 98 Z"/>
+    <rect x="54" y="82" width="36" height="12" rx="6"/>
+  </g>
+</svg>

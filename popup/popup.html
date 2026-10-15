@@ -1,0 +1,64 @@
+<!doctype html>
+<!--
+  TubeList — toolbar popup
+  This small window opens when you click the TubeList icon in the browser
+  toolbar. It lets you manage your topics and the distraction-hiding switches.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TubeList</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="header">
+    <img class="logo" src="../icons/icon-48.png" alt="">
+    <div>
+      <h1 class="title">TubeList</h1>
+      <p class="subtitle">Topics to explore on YouTube</p>
+    </div>
+  </header>
+
+  <!-- Box for adding a new topic -->
+  <form id="add-form" class="add">
+    <input id="add-input" type="text" placeholder="Add a topic…"
+           maxlength="200" autocomplete="off" aria-label="New topic">
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+
+  <!-- Short notes like "Already in your list." appear here -->
+  <p id="message" class="message" role="status"></p>
+
+  <!-- Your topics are listed here by popup.js -->
+  <ul id="topic-list" class="list"></ul>
+  <p id="empty" class="empty" hidden>Your list is empty. Add a topic above.</p>
+
+  <!-- The distraction-hiding switches. Each data-setting name matches
+       one in shared/settings.js. -->
+  <section class="settings">
+    <h2 class="settings-title">Hide distractions</h2>
+    <label class="switch-row">
+      <span>Hide Shorts everywhere</span>
+      <input type="checkbox" class="switch" data-setting="hideShorts">
+    </label>
+    <label class="switch-row">
+      <span>Hide recommended videos in the sidebar while watching</span>
+      <input type="checkbox" class="switch" data-setting="hideSidebar">
+    </label>
+    <label class="switch-row">
+      <span>Hide end-of-video suggestion cards</span>
+      <input type="checkbox" class="switch" data-setting="hideEndCards">
+    </label>
+    <label class="switch-row">
+      <span>Hide the home feed <small>(stays hidden after “Go to normal YouTube”)</small></span>
+      <input type="checkbox" class="switch" data-setting="hideHomeFeed">
+    </label>
+  </section>
+
+  <script src="../shared/dom.js"></script>
+  <script src="../shared/topics.js"></script>
+  <script src="../shared/topic-list.js"></script>
+  <script src="../shared/settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

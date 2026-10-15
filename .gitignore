@@ -1,0 +1,17 @@
+# Packaged builds of the extension (if you ever zip it up)
+*.zip
+*.xpi
+*.crx
+*.pem
+web-ext-artifacts/
+
+# Files created by operating systems
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor settings
+.vscode/
+.idea/
+*.swp
+*~
