@@ -81,7 +81,10 @@ topic → YouTube searches for it → you start watching.
 - [x] README: supported / not supported, install from GitHub release, updating, removing, privacy, troubleshooting
 - [x] Release zip `TubeList-v1.0.0.zip` (extension files only)
 - [x] Pushed to github.com/akashmony01/TubeList with tag v1.0.0
-- [ ] GitHub release page created with the zip attached
+- [x] GitHub release page created with the zip attached
+- [x] Signed by Mozilla (unlisted, "On your own"), AMO add-on #3098655 — approved 2026-10-16
+- [ ] Signed `TubeList-v1.0.0.xpi` attached to the GitHub release
+- [x] README: Firefox now installs permanently from the signed .xpi; release steps include signing
 
 ## Not in version 1
 "Done" checkboxes (planned v1.1), sync across devices, categories/tags,
@@ -100,8 +103,8 @@ AI suggestions, timers/stats, store publishing, Safari, OS-wide shortcut.
       Depends on the two items above.
 
 ### Maybe later
-- [ ] Permanent Firefox install (signing the add-on through Mozilla as a
-      private, unlisted add-on, without publishing it in the store).
+- [x] Permanent Firefox install (signing the add-on through Mozilla as a
+      private, unlisted add-on, without publishing it in the store). Done for v1.0.0.
 - [ ] **Use the list on mobile.** The YouTube *app* can't be changed by any
       extension. Most realistic path: Firefox for Android (supports add-ons)
       + support for m.youtube.com + list sync via Firefox Sync

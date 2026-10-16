@@ -43,7 +43,7 @@ The whole idea is one smooth flow:
 | ✅ Works | ❌ Not supported |
 |---|---|
 | **Chrome, Edge, Brave** on Windows, macOS and Linux | **Safari** (Mac, iPhone, iPad) |
-| **Firefox** 121 or newer (see the Firefox notes below) | **Phones and tablets**, including the **YouTube app**: apps can't run browser extensions |
+| **Firefox** 121 or newer: signed by Mozilla, installs permanently | **Phones and tablets**, including the **YouTube app**: apps can't run browser extensions |
 | Other Chromium browsers (Opera, Vivaldi, …) should work too, but aren't tested | **m.youtube.com** (mobile site), **music.youtube.com**, YouTube Kids, and YouTube videos embedded on other websites |
 | **www.youtube.com** in a desktop browser | **Syncing** your list between browsers or computers: each browser keeps its own list |
 | Light and dark mode | Installing from the Chrome Web Store or Firefox Add-ons site (not published there) |
@@ -57,7 +57,10 @@ TubeList has been tested on Linux in Chrome and Firefox.
 TubeList isn't in the extension stores, so you install it from GitHub.
 It takes about a minute.
 
-### Step 1: Download
+**Using Firefox?** Skip to the [Firefox section](#firefox): it's a single
+file to install.
+
+### Step 1: Download (Chrome, Edge, Brave)
 
 1. Open the **[latest release](https://github.com/akashmony01/TubeList/releases/latest)**.
 2. Under **Assets**, download **`TubeList-v1.0.0.zip`**
@@ -93,51 +96,55 @@ harmless: those lines are there for Firefox, and Chromium browsers simply
 ignore them. (Keeping them lets one folder work in every browser without a
 build step.)
 
-### Step 2b: Firefox
+### Firefox
 
-Regular Firefox only installs add-ons permanently once Mozilla has signed
-them, and TubeList isn't signed yet. You have two options:
+For Firefox you don't need Step 1. TubeList is **signed by Mozilla**, so it
+installs permanently in regular Firefox from a single file:
 
-**Option 1: Temporary (any Firefox, simplest)**
+1. Open the **[latest release](https://github.com/akashmony01/TubeList/releases/latest)**
+   and, under **Assets**, download **`TubeList-v1.0.0.xpi`**
+   (the version number may be higher).
+   (If Firefox offers to install it right away, click **Continue to
+   Installation** → **Add** and you're done.)
+2. Type `about:addons` in the address bar.
+3. Click the **gear icon ⚙** → **Install Add-on From File…** and choose the
+   downloaded `.xpi` file.
+4. Firefox asks **"Add TubeList?"** and shows its permission (access to
+   your data on www.youtube.com, which is needed to show the panel).
+   Click **Add**.
+5. Optional: click the **puzzle-piece icon** in the toolbar, then the gear
+   next to TubeList → **Pin to Toolbar**.
+6. Open [youtube.com](https://www.youtube.com). Your TubeList panel appears.
 
-1. Type `about:debugging#/runtime/this-firefox` in the address bar.
-2. Click **Load Temporary Add-on…** and select the downloaded
-   **`TubeList-v1.0.0.zip`** file (or `manifest.json` inside the unzipped
-   folder).
-3. Open YouTube. If the panel doesn't appear, click the **puzzle-piece icon**,
-   find TubeList, choose **Always allow on www.youtube.com**, and refresh.
+TubeList stays installed when you restart Firefox, and keeps your list.
 
-Firefox removes temporary add-ons when it closes (and your list with it),
-so repeat these steps after each restart.
+> TubeList is signed by Mozilla but not listed in the Firefox Add-ons
+> store, so you won't find it by searching there. The `.xpi` on GitHub is
+> the official file.
 
-**Option 2: Permanent (Firefox Developer Edition, Nightly or ESR only)**
-
-These versions of Firefox can install unsigned add-ons:
-
-1. Type `about:config` in the address bar and accept the warning.
-2. Search for `xpinstall.signatures.required` and set it to **false**.
-3. Make a copy of `TubeList-v1.0.0.zip` and rename the copy to
-   `TubeList.xpi`.
-4. Open `about:addons`, click the **gear icon ⚙** →
-   **Install Add-on From File…**, and choose `TubeList.xpi`.
-
-(This setting has no effect in regular Firefox.)
+**Trying a code change (for developers):** to run your own unsigned copy
+of the folder, open `about:debugging#/runtime/this-firefox`, click
+**Load Temporary Add-on…** and select `manifest.json`. Remove the installed
+TubeList first to avoid two copies. Temporary add-ons (and their list) are
+removed when Firefox closes.
 
 ### Updating to a new version
 
-1. Download the new zip from the
-   [releases page](https://github.com/akashmony01/TubeList/releases).
-2. Unzip it **into the same folder**, replacing the old files.
-3. **Chrome / Edge / Brave:** on the extensions page, click the round
-   **reload** arrow on the TubeList card, then refresh your YouTube tabs.
-   Your list is kept.
-   **Firefox:** load it again as described above.
+Your list and settings are kept when you update.
+
+- **Chrome / Edge / Brave:** download the new zip from the
+  [releases page](https://github.com/akashmony01/TubeList/releases), unzip
+  it **into the same folder** (replacing the old files), then click the round
+  **reload** arrow on the TubeList card and refresh your YouTube tabs.
+- **Firefox:** download the new `.xpi` from the releases page and install it
+  the same way (`about:addons` → gear ⚙ → **Install Add-on From File…**).
+  It replaces the old version.
 
 ### Removing TubeList
 
-On the extensions page (or `about:addons` in Firefox), click **Remove** on
-TubeList. This also deletes your saved list and switch settings. You can
-then delete the folder.
+On the extensions page (or `about:addons` in Firefox, via the **⋯** menu
+next to TubeList), click **Remove**. This also deletes your saved list and
+switch settings. In Chrome/Edge/Brave you can then delete the folder.
 
 ---
 
@@ -336,10 +343,13 @@ If you fix something, a pull request on GitHub is very welcome.
 - **Something isn't hidden anymore / the panel looks wrong.** YouTube
   probably changed its layout; see
   [Fixing things when YouTube changes its layout](#fixing-things-when-youtube-changes-its-layout).
-- **My list disappeared.** In Firefox with a temporary add-on, the list is
-  removed when Firefox closes. In Chrome/Edge/Brave, the list is tied to the
+- **My list disappeared.** In Chrome/Edge/Brave, the list is tied to the
   folder's location; moving the folder makes the browser treat it as a new
-  extension.
+  extension. In Firefox, this happens only with a *temporary* add-on (loaded
+  via `about:debugging`); install the signed `.xpi` instead.
+- **Firefox says the add-on "could not be verified" or is corrupt.** You
+  probably picked the `.zip` instead of the `.xpi`. Only the `.xpi` from the
+  releases page is signed.
 - **The shortcut does nothing.** See
   [If the shortcut doesn't work](#changing-the-shortcut).
 
@@ -371,8 +381,15 @@ PLAN.md                     project plan, decisions and future ideas
    ```
    zip -r TubeList-v1.0.1.zip manifest.json background.js content popup shared icons LICENSE README.md
    ```
-3. Commit, tag (`git tag v1.0.1`), push, and attach the zip to a new
-   release on GitHub.
+3. **Sign it for Firefox:** on
+   [addons.mozilla.org/developers](https://addons.mozilla.org/developers/),
+   open TubeList → **Upload New Version**, choose **On your own**
+   (unlisted), and upload the zip. After the automatic check (usually a few
+   minutes), download the signed `.xpi` from **Manage Status & Versions**.
+   (Each version number can only be uploaded once, so always raise it first.)
+4. Commit, tag (`git tag v1.0.1`), push, and create a GitHub release with
+   both files attached: the zip (Chrome/Edge/Brave) and the `.xpi` renamed
+   to `TubeList-v1.0.1.xpi` (Firefox).
 
 ## License
 
